@@ -11,7 +11,7 @@ namespace LINQquestions
         static void Main(string[] args)
         {
             LINQ linq = new LINQ();
-            //linq.AlphabeticalString("Terrill");
+            linq.AlphabeticalString("Terrill");
             //linq.FindSubString();
             //linq.RemoveLowestNumber("66");
             //Console.ReadLine();

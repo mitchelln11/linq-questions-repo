@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LINQquestions
 {
-    class LINQ
+    public class LINQ
     {
         public void FindSubString()
         {
@@ -28,44 +28,49 @@ namespace LINQquestions
             }
         }
 
-        public static string[] RemoveLowestNumber(string item)
-        {
-            // convert
-            var output = item.Split(',').OrderByDescending(i => int.Parse(i)).ToList();
-            output.RemoveAt(item.Length -1);
-            return output.ToArray();
-        }
-
         //public static string[] RemoveLowestNumber(string item)
         //{
         //    // convert
-        //    var output = item.Split(',').OrderBy(i => int.Parse(i)).ToList();
-        //    output.RemoveAt(0);
+        //    var output = item.Split(',').OrderByDescending(i => int.Parse(i)).ToList();
+        //    output.RemoveAt(item.Length -1);
         //    return output.ToArray();
         //}
 
-        public static double[] AverageNumbers(double[] scores) // Not working yet
+        public static string[] RemoveLowestNumber(string item)
         {
-            // Loop through each string
-            // Sort through string
-            // Drop the lowest number
-            // Average the numbers of each index[?]
-            // Average the entire collection
+            // convert
+            var output = item.Split(',').OrderBy(i => int.Parse(i)).ToList();
+            output.RemoveAt(0);
+            return output.ToArray();
+        }
 
-            List<string> classGrades = new List<string>()
+        public static double[] StringToDouble(string[] item)
+        {
+            double[] doubleArray = new double[item.Length];
+            for (int i = 0; i < item.Length; i++)
             {
-            "80,100,92,89,65",
-            "93,81,78,84,69",
-            "73,88,83,99,64",
-            "98,100,66,74,55"
-            };
-            foreach (var grade in classGrades)
-            {
-                Console.WriteLine("Test");
+                doubleArray[i] = double.Parse(item[i]);
             }
-            Console.WriteLine(classGrades);
-            Console.ReadLine();
-            return scores;
+            return doubleArray;
+        }
+
+        // Run separate methods together
+        public static List<double> AverageNumbers(List<string> items)
+        {
+            List<double> averages = new List<double>();
+            foreach (string item in items)
+            {
+                string[] grades = RemoveLowestNumber(item);
+                double[] gradesAsDoubles = StringToDouble(grades);
+                double average = gradesAsDoubles.Average();
+                averages.Add(average);
+            }
+            return averages;
+        }
+
+        public static double AverageGrade(List<double> items)
+        {
+            return items.Average();
         }
 
         public void AlphabeticalString(string personName)
@@ -78,7 +83,7 @@ namespace LINQquestions
             {
                 counted.Add(charGroup.Count()); // Setting as Int // Gets 1,1,2,2,1
             }
-            var zippedList = input.Zip(counted, (i, c) => i + "" + c); // Need to add the + "" + otherwise it displays the character unicode number
+            var zippedList = input.Zip(counted, (i, c) => i + "" + c + "|"); // Need to add the + "" + otherwise it displays the character unicode number
 
             string result = "";
             foreach (var item in zippedList)
